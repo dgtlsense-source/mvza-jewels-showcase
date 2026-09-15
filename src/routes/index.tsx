@@ -37,19 +37,21 @@ function getCountdown() {
 }
 
 function Index() {
-  const [countdown, setCountdown] = useState(getCountdown());
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [venueOpen, setVenueOpen] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   useEffect(() => {
+    setCountdown(getCountdown());
     const timer = window.setInterval(() => setCountdown(getCountdown()), 1000);
     return () => window.clearInterval(timer);
   }, []);
 
   async function submitInvitation(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setStatus("sending");
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(formElement);
     const name = String(form.get("name") ?? "").trim();
     const phone = String(form.get("phone") ?? "").trim();
     const { error } = await supabase.from("opening_invitations").insert({ name, phone });
@@ -57,7 +59,7 @@ function Index() {
       setStatus("error");
       return;
     }
-    event.currentTarget.reset();
+    formElement.reset();
     setStatus("success");
   }
 
