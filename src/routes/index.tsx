@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowDown, ArrowUpRight, Facebook, Instagram, MapPin } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import logoAsset from "@/assets/mvza-logo.png.asset.json";
+import logoBeige from "@/assets/mvza-logo-beige.png";
 import filmAsset from "@/assets/mvza-opening-film.mp4.asset.json";
 
 // No head() here: the home route inherits title/description/og/twitter from
@@ -68,7 +68,7 @@ function Index() {
       <section className="relative flex min-h-[92svh] items-end justify-center overflow-hidden bg-ink px-5 pb-12 pt-8 text-ivory md:min-h-[94vh] md:pb-16">
         <video className="absolute inset-0 h-full w-full object-cover" src={filmAsset.url} autoPlay muted loop playsInline aria-label="Antique gold necklace under a warm gallery light" />
         <div className="film-shade absolute inset-0" />
-        <img src={logoAsset.url} alt="MVZA Jewels" className="absolute left-1/2 top-5 z-10 w-44 -translate-x-1/2 mix-blend-screen md:top-8 md:w-56" />
+        <img src={logoBeige} alt="MVZA Jewels" className="absolute left-1/2 top-5 z-10 w-56 -translate-x-1/2 drop-shadow md:top-8 md:w-72" />
         <div className="quiet-rise relative z-10 mx-auto w-full max-w-5xl text-center">
           <p className="mb-5 text-[0.65rem] font-medium uppercase tracking-[0.34em] text-gold-soft md:text-xs">Ahmedabad · 11 October 2026</p>
           <h1 className="font-display text-5xl font-normal leading-[0.92] md:text-8xl lg:text-9xl">The unveiling<br /><span className="italic text-gold-soft">awaits.</span></h1>
