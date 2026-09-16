@@ -58,7 +58,7 @@ function Index() {
     const entranceTimer = window.setTimeout(() => {
       window.sessionStorage.setItem("mvza-entrance-seen", "true");
       setShowEntrance(false);
-    }, 3900);
+    }, 5000);
 
     return () => window.clearTimeout(entranceTimer);
   }, []);
@@ -82,13 +82,20 @@ function Index() {
   return (
     <main className="overflow-hidden bg-background text-foreground">
       {showEntrance && (
-        <div className="showroom-intro fixed inset-0 z-50 overflow-hidden bg-ink" aria-label="MVZA Jewels showroom opening">
+        <div className="showroom-intro fixed inset-0 z-50 overflow-hidden" aria-label="MVZA Jewels showroom opening">
           <div className="showroom-glow absolute inset-0" />
           <div className="showroom-door showroom-door-left absolute inset-y-0 left-0 w-1/2" aria-hidden="true">
             <span className="door-inlay absolute inset-y-[5%] right-[8%] w-[72%] border border-gold/40" />
             <span className="door-handle absolute right-[6%] top-1/2 h-24 w-1 -translate-y-1/2 bg-gold-soft" />
           </div>
-          <div className="showroom-door showroom-door-right absolute inset-y-0 right-0 w-1/2" aria-hidden="true">
+          <div
+            className="showroom-door showroom-door-right absolute inset-y-0 right-0 w-1/2"
+            aria-hidden="true"
+            onAnimationEnd={() => {
+              window.sessionStorage.setItem("mvza-entrance-seen", "true");
+              setShowEntrance(false);
+            }}
+          >
             <span className="door-inlay absolute inset-y-[5%] left-[8%] w-[72%] border border-gold/40" />
             <span className="door-handle absolute left-[6%] top-1/2 h-24 w-1 -translate-y-1/2 bg-gold-soft" />
           </div>
