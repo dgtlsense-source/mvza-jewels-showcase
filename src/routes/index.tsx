@@ -40,11 +40,27 @@ function Index() {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [venueOpen, setVenueOpen] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [showEntrance, setShowEntrance] = useState(true);
 
   useEffect(() => {
     setCountdown(getCountdown());
     const timer = window.setInterval(() => setCountdown(getCountdown()), 1000);
     return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || window.sessionStorage.getItem("mvza-entrance-seen")) {
+      setShowEntrance(false);
+      return;
+    }
+
+    const entranceTimer = window.setTimeout(() => {
+      window.sessionStorage.setItem("mvza-entrance-seen", "true");
+      setShowEntrance(false);
+    }, 3900);
+
+    return () => window.clearTimeout(entranceTimer);
   }, []);
 
   async function submitInvitation(event: FormEvent<HTMLFormElement>) {
@@ -65,6 +81,22 @@ function Index() {
 
   return (
     <main className="overflow-hidden bg-background text-foreground">
+      {showEntrance && (
+        <div className="showroom-intro fixed inset-0 z-50 overflow-hidden bg-ink" aria-label="MVZA Jewels showroom opening">
+          <div className="showroom-glow absolute inset-0" />
+          <div className="showroom-door showroom-door-left absolute inset-y-0 left-0 w-1/2" aria-hidden="true">
+            <span className="door-inlay absolute inset-y-[5%] right-[8%] w-[72%] border border-gold/40" />
+            <span className="door-handle absolute right-[6%] top-1/2 h-24 w-1 -translate-y-1/2 bg-gold-soft" />
+          </div>
+          <div className="showroom-door showroom-door-right absolute inset-y-0 right-0 w-1/2" aria-hidden="true">
+            <span className="door-inlay absolute inset-y-[5%] left-[8%] w-[72%] border border-gold/40" />
+            <span className="door-handle absolute left-[6%] top-1/2 h-24 w-1 -translate-y-1/2 bg-gold-soft" />
+          </div>
+          <div className="intro-logo-wrap absolute inset-0 z-10 flex items-center justify-center px-12">
+            <img src={logoAsset.url} alt="MVZA Jewels" className="intro-logo w-52 mix-blend-screen md:w-72" />
+          </div>
+        </div>
+      )}
       <section className="relative flex min-h-[92svh] items-end justify-center overflow-hidden bg-ink px-5 pb-12 pt-8 text-ivory md:min-h-[94vh] md:pb-16">
         <video className="absolute inset-0 h-full w-full object-cover" src={filmAsset.url} autoPlay muted loop playsInline aria-label="Antique gold necklace under a warm gallery light" />
         <div className="film-shade absolute inset-0" />
