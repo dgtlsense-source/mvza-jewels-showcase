@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowDown, ArrowUpRight, Facebook, Instagram, MapPin } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import logoAsset from "@/assets/mvza-logo.png.asset.json";
+import logoBeige from "@/assets/mvza-logo-beige.png";
 import filmAsset from "@/assets/mvza-opening-film.mp4.asset.json";
 
 // No head() here: the home route inherits title/description/og/twitter from
