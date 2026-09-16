@@ -171,77 +171,12 @@
   background: linear-gradient(135deg, var(--ink), oklch(0.21 0.025 70));
 }
 
-@utility showroom-glow {
-  background: radial-gradient(circle at 50% 54%, color-mix(in oklab, var(--gold) 36%, transparent), transparent 38%);
-  animation: showroom-light 3.9s ease-in-out both;
-}
-
-@utility showroom-door {
-  background:
-    linear-gradient(90deg, color-mix(in oklab, var(--gold) 18%, transparent), transparent 13%, transparent 87%, color-mix(in oklab, var(--gold) 18%, transparent)),
-    linear-gradient(135deg, var(--ink), color-mix(in oklab, var(--ink) 82%, var(--gold)));
-  border-color: color-mix(in oklab, var(--gold) 62%, transparent);
-  box-shadow: inset 0 0 70px color-mix(in oklab, var(--ink) 78%, transparent), 0 0 24px color-mix(in oklab, var(--gold) 14%, transparent);
-  will-change: transform;
-}
-
-@utility showroom-door-left {
-  border-right-width: 1px;
-  transform-origin: left center;
-  animation: door-open-left 3.9s cubic-bezier(.76, 0, .24, 1) both;
-}
-
-@utility showroom-door-right {
-  border-left-width: 1px;
-  transform-origin: right center;
-  animation: door-open-right 3.9s cubic-bezier(.76, 0, .24, 1) both;
-}
-
-@utility intro-logo-wrap {
-  animation: logo-depart 3.9s ease-in-out both;
-}
-
-@utility intro-logo {
-  filter: drop-shadow(0 0 18px color-mix(in oklab, var(--gold) 34%, transparent));
-  animation: logo-pulse 1.1s ease-in-out 2;
-}
-
 @keyframes quiet-rise {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes logo-pulse {
-  0%, 100% { opacity: .52; transform: scale(.985); }
-  50% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes logo-depart {
-  0%, 48% { opacity: 1; }
-  63%, 100% { opacity: 0; }
-}
-
-@keyframes door-open-left {
-  0%, 48% { transform: translateX(0); }
-  100% { transform: translateX(-102%); }
-}
-
-@keyframes door-open-right {
-  0%, 48% { transform: translateX(0); }
-  100% { transform: translateX(102%); }
-}
-
-@keyframes showroom-light {
-  0%, 42% { opacity: .15; }
-  75% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .quiet-rise { animation: quiet-rise 1.2s cubic-bezier(.22,1,.36,1) both; }
   .quiet-rise-late { animation-delay: .35s; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .showroom-intro { display: none; }
 }
