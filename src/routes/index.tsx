@@ -124,7 +124,7 @@ function Index() {
           <p className="font-display text-lg text-gold-soft">MVZA JEWELS</p>
           <p className="text-[0.6rem] uppercase tracking-[0.2em]">Antique gold jewellery · Ahmedabad</p>
           <div className="flex gap-5">
-            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="MVZA Jewels on Instagram" className="transition-colors hover:text-gold-soft"><Instagram size={18} strokeWidth={1.3} /></a>
+            <a href="https://www.instagram.com/mvzajewels" target="_blank" rel="noreferrer" aria-label="MVZA Jewels on Instagram" className="transition-colors hover:text-gold-soft"><Instagram size={18} strokeWidth={1.3} /></a>
             <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="MVZA Jewels on Facebook" className="transition-colors hover:text-gold-soft"><Facebook size={18} strokeWidth={1.3} /></a>
           </div>
         </div>
