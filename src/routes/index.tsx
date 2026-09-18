@@ -13,9 +13,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "MVZA Jewels | Antique Gold Jewellery Ahmedabad" },
-      { name: "description", content: "MVZA Jewels opens in Ahmedabad on 11 October 2026. Discover antique gold jewellery and request your special opening invitation." },
+      { name: "description", content: "MVZA Jewels opens in Ahmedabad on 20 October 2026. Discover antique gold jewellery and request your special opening invitation." },
       { property: "og:title", content: "MVZA Jewels — The unveiling awaits" },
-      { property: "og:description", content: "Antique gold jewellery arrives in Ahmedabad on 11 October 2026." },
+      { property: "og:description", content: "Antique gold jewellery arrives in Ahmedabad on 20 October 2026." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const openingDate = new Date("2026-10-11T10:00:00+05:30");
+const openingDate = new Date("2026-10-20T10:00:00+05:30");
 const address = "9, Keshavbaug Capital, Near Shivranjani Cross Rd, next to ITC Narmada, I I M, Vastrapur, Ahmedabad, Gujarat 380015";
 
 function getCountdown() {
@@ -70,7 +70,7 @@ function Index() {
         <div className="film-shade absolute inset-0" />
         <img src={logoAsset.url} alt="MVZA Jewels" className="absolute left-1/2 top-5 z-10 w-44 -translate-x-1/2 mix-blend-screen md:top-8 md:w-56" />
         <div className="quiet-rise relative z-10 mx-auto w-full max-w-5xl text-center">
-          <p className="mb-5 text-[0.65rem] font-medium uppercase tracking-[0.34em] text-gold-soft md:text-xs">Ahmedabad · 11 October 2026</p>
+          <p className="mb-5 text-[0.65rem] font-medium uppercase tracking-[0.34em] text-gold-soft md:text-xs">Ahmedabad · 20 October 2026</p>
           <h1 className="font-display text-5xl font-normal leading-[0.92] md:text-8xl lg:text-9xl">The unveiling<br /><span className="italic text-gold-soft">awaits.</span></h1>
           <div className="gold-rule mx-auto my-8 h-px w-40 md:w-64" />
           <div className="mx-auto grid max-w-xl grid-cols-4" aria-label="Countdown to the opening">

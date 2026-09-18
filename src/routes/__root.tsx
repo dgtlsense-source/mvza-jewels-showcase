@@ -78,7 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "MVZA Jewels" },
-      { name: "description", content: "Antique gold jewellery, opening in Ahmedabad on 11 October 2026." },
+      { name: "description", content: "Antique gold jewellery, opening in Ahmedabad on 20 October 2026." },
       { name: "author", content: "MVZA Jewels" },
       { property: "og:site_name", content: "MVZA Jewels" },
       { property: "og:type", content: "website" },
