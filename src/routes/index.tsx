@@ -66,9 +66,34 @@ function Index() {
   return (
     <main className="overflow-hidden bg-background text-foreground">
       <section className="relative flex min-h-[92svh] items-end justify-center overflow-hidden bg-ink px-5 pb-12 pt-8 text-ivory md:min-h-[94vh] md:pb-16">
-        <video className="absolute inset-0 h-full w-full object-cover" src={filmAsset.url} autoPlay muted loop playsInline aria-label="Antique gold necklace under a warm gallery light" />
+        <video
+          ref={(el) => {
+            if (el) {
+              el.defaultMuted = true;
+              el.muted = true;
+            }
+          }}
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-label="Antique gold necklace under a warm gallery light"
+        >
+          <source src="/mvza-opening-film.mp4" type="video/mp4" />
+          <source src={filmAsset.url} type="video/mp4" />
+          <source src="https://eea26354-54ce-420d-b14d-4982bacbb73b.lovableproject.com/__l5e/assets-v1/e0af91d4-7c2d-4d45-a3e7-9b7ac38d1359/mvza-opening-film.mp4" type="video/mp4" />
+        </video>
         <div className="film-shade absolute inset-0" />
-        <img src={logoAsset.url} alt="MVZA Jewels" className="absolute left-1/2 top-5 z-10 w-44 -translate-x-1/2 mix-blend-screen md:top-8 md:w-56" />
+        <img
+          src={logoAsset.url || "/mvza-logo.png"}
+          onError={(e) => {
+            e.currentTarget.src = "/mvza-logo.png";
+          }}
+          alt="MVZA Jewels"
+          className="absolute left-1/2 top-5 z-10 w-44 -translate-x-1/2 mix-blend-screen md:top-8 md:w-56"
+        />
         <div className="quiet-rise relative z-10 mx-auto w-full max-w-5xl text-center">
           <p className="mb-5 text-[0.65rem] font-medium uppercase tracking-[0.34em] text-gold-soft md:text-xs">Ahmedabad · 20 October 2026</p>
           <h1 className="font-display text-5xl font-normal leading-[0.92] md:text-8xl lg:text-9xl">The unveiling<br /><span className="italic text-gold-soft">awaits.</span></h1>
