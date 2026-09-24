@@ -59,11 +59,12 @@ function Index() {
       "https://script.google.com/macros/s/AKfycbyenzO6Lz5M4YFhHcrps3eujMVoymHIWtG40rdz8pDQQDnDIORBlSgqa2SyZ8Pvi2mVGg/exec";
 
     try {
-      // 1. Send to Google Sheet (primary)
+      // 1. Send to Google Sheet in background with keepalive (instant delivery without freezing UI)
       if (googleSheetUrl) {
-        await fetch(googleSheetUrl, {
+        fetch(googleSheetUrl, {
           method: "POST",
           mode: "no-cors",
+          keepalive: true,
           headers: {
             "Content-Type": "text/plain;charset=utf-8",
           },
@@ -72,20 +73,26 @@ function Index() {
             phone,
             date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
           }),
-        });
+        }).catch((err) => console.error("Google Sheets submit error:", err));
       }
 
-      // 2. Also send to Supabase as backup (safely guarded)
+      // 2. Also send to Supabase as backup (safely in background)
       try {
         if (supabase && typeof supabase.from === "function") {
-          await supabase.from("opening_invitations").insert({ name, phone });
+          supabase
+            .from("opening_invitations")
+            .insert({ name, phone })
+            .catch((sbErr) => console.warn("Supabase backup skipped:", sbErr));
         }
       } catch (sbErr) {
-        console.warn("Supabase backup skipped or failed:", sbErr);
+        console.warn("Supabase backup skipped:", sbErr);
       }
 
-      formElement.reset();
-      setStatus("success");
+      // Instant 350ms smooth transition so user sees immediate response
+      setTimeout(() => {
+        formElement.reset();
+        setStatus("success");
+      }, 350);
     } catch (err) {
       console.error("Form submission error:", err);
       setStatus("error");
@@ -107,7 +114,8 @@ function Index() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
+          poster="/mvza-poster.webp"
           aria-label="Antique gold necklace under a warm gallery light"
         >
           <source src="/mvza-opening-film.mp4" type="video/mp4" />
