@@ -54,7 +54,9 @@ function Index() {
     const form = new FormData(formElement);
     const name = String(form.get("name") ?? "").trim();
     const phone = String(form.get("phone") ?? "").trim();
-    const googleSheetUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
+    const googleSheetUrl =
+      import.meta.env.VITE_GOOGLE_SHEET_URL ||
+      "https://script.google.com/macros/s/AKfycbyenzO6Lz5M4YFhHcrps3eujMVoymHIWtG40rdz8pDQQDnDIORBlSgqa2SyZ8Pvi2mVGg/exec";
 
     try {
       const tasks: Promise<unknown>[] = [];
