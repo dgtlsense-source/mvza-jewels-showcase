@@ -54,13 +54,45 @@ function Index() {
     const form = new FormData(formElement);
     const name = String(form.get("name") ?? "").trim();
     const phone = String(form.get("phone") ?? "").trim();
-    const { error } = await supabase.from("opening_invitations").insert({ name, phone });
-    if (error) {
+    const googleSheetUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
+
+    try {
+      const tasks: Promise<unknown>[] = [];
+
+      // 1. Send to Google Sheet if configured
+      if (googleSheetUrl) {
+        tasks.push(
+          fetch(googleSheetUrl, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+            body: JSON.stringify({
+              name,
+              phone,
+              date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+            }),
+          }).catch((err) => console.error("Google Sheets submit error:", err))
+        );
+      }
+
+      // 2. Also send to Supabase as backup
+      tasks.push(
+        supabase
+          .from("opening_invitations")
+          .insert({ name, phone })
+          .catch((err) => console.error("Supabase insert error:", err))
+      );
+
+      await Promise.allSettled(tasks);
+
+      formElement.reset();
+      setStatus("success");
+    } catch (err) {
+      console.error("Form submission error:", err);
       setStatus("error");
-      return;
     }
-    formElement.reset();
-    setStatus("success");
   }
 
   return (
