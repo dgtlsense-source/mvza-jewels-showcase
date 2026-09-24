@@ -59,35 +59,30 @@ function Index() {
       "https://script.google.com/macros/s/AKfycbyenzO6Lz5M4YFhHcrps3eujMVoymHIWtG40rdz8pDQQDnDIORBlSgqa2SyZ8Pvi2mVGg/exec";
 
     try {
-      const tasks: Promise<unknown>[] = [];
-
-      // 1. Send to Google Sheet if configured
+      // 1. Send to Google Sheet (primary)
       if (googleSheetUrl) {
-        tasks.push(
-          fetch(googleSheetUrl, {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-              "Content-Type": "text/plain;charset=utf-8",
-            },
-            body: JSON.stringify({
-              name,
-              phone,
-              date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
-            }),
-          }).catch((err) => console.error("Google Sheets submit error:", err))
-        );
+        await fetch(googleSheetUrl, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body: JSON.stringify({
+            name,
+            phone,
+            date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+          }),
+        });
       }
 
-      // 2. Also send to Supabase as backup
-      tasks.push(
-        supabase
-          .from("opening_invitations")
-          .insert({ name, phone })
-          .catch((err) => console.error("Supabase insert error:", err))
-      );
-
-      await Promise.allSettled(tasks);
+      // 2. Also send to Supabase as backup (safely guarded)
+      try {
+        if (supabase && typeof supabase.from === "function") {
+          await supabase.from("opening_invitations").insert({ name, phone });
+        }
+      } catch (sbErr) {
+        console.warn("Supabase backup skipped or failed:", sbErr);
+      }
 
       formElement.reset();
       setStatus("success");
